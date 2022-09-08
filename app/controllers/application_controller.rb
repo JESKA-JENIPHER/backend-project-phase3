@@ -58,46 +58,43 @@ get '/' do
     all_profiles.to_json(only: [:id, :age, :years_of_experience, :bio, :agent_id])
   end
 
-   get '/players/:id' do
-    single_player = Player.find(params[:id])
-    single_player.to_json(only: [:id, :name, :age, :nationality], include: {
-      teams: { only: [:name], include: {contracts: {only: [:contract_duration]}}}
-    })
+  get "/players/:id" do
+    all_players = Player.find(params[:id])
+    all_players.to_json(only: [:id, :name, :age, :slogan, :role_played, :image_url])
   end
-  get '/agents/:id' do
-    single_agent = Agent.find(params[:id])
-    single_agent.to_json(only: [:id, :name, :id_number, :public_contact],
-      include: {player: {only: [:name], include: {contract: {only: [:contract_duration]}}}}
-    )
+
+ get '/agents/:id' do
+    all_agents = Agent.all
+    all_agents.to_json(only: [:id, :name, :years_of_experience, :fee])
   end
   
-  get '/teams/:id' do
-    single_team = Team.find(params[:id])
-    single_team.to_json(only: [:id, :name, :year_founded], 
-     include: {player: {only: [:name]}})
+  get '/teams/id' do
+    all_teams = Team.all
+    all_teams.to_json(only: [:id, :name, :year_founded])
+  end
+    get '/agent_profiles/id' do
+    all_profiles = Agent_profile.all
+    all_profiles.to_json(only: [:id, :age, :years_of_experience, :bio, :agent_id])
   end
 
+#  get '/players/agents' do
+#     all_players = Player.find(params[:id])
+#     all_players.to_json(only: [:id, :name, :age, :agent_id, :team_id], include: {agents: {only: [:name]}})
+#   end
+  # get '/agents/edit/:id' do
+  #   single_agent = Agent.find(params[:id])
+  #   single_agent.to_json(only: [:id, :name, :years_of_experience,:fee], include: {contract: {only: [:player_id], include: {player: [:name]}}})
+  # end
 
-  get '/players/edit/:id' do
-    single_player = Player.find(params[:id])
-    single_player.to_json(only: [:id, :name, :age, :agent_id, :team_id], include: {agent: {only: [:name]}})
-  end
-
-  get '/agents/edit/:id' do
-    single_agent = Agent.find(params[:id])
-    single_agent.to_json(only: [:id, :name, :years_of_experience,:fee], include: {contract: {only: [:player_id], include: {player: [:name]}}})
-  end
-
-  get '/teams/edit/:id' do
-    single_team = Team.find(params[:id])
-    single_team.to_json(only: [:id, :name, :total_units, :year_founded], include: {players: {only: [:name]}})
-  end
+  # get '/teams/edit/:id' do
+  #   single_team = Team.find(params[:id])
+  #   single_team.to_json(only: [:id, :name, :total_units, :year_founded], include: {players: {only: [:name]}})
+  # end
 
 # //POST
 
-  put '/players/:id' do
-    player_deets = Player.find(params[:id])
-    player_deets.update(
+  post '/players' do
+    player_deets = Player.create(
       name: params[:name],
       age: params[:age],
       race: params[:race],
@@ -108,27 +105,24 @@ get '/' do
     player_deets.to_json
   end
 
-  put '/agents/:id' do
-    agent_deets = Agent.find(params[:id])
-    agent_deets.update(
+  post '/agents' do
+    agent_deets = Agent.create(
       name: params[:name],
       years_of_experience: params[:years_of_experience]
     )
     agent_deets.to_json
   end
 
-  put '/teams/:id' do
-    team_deets = Team.find(params[:id])
-    team_deets.update(
+  post'/teams' do
+    team_deets = Team.create(
       name: params[:name],
       years_of_experience: params[:years_of_experience]
     )
     team_deets.to_json
   end
 
-  put '/contracts/:id' do
-    contract_deets = Contract.find(params[:id])
-    contract_deets.update(
+  post '/contracts' do
+    contract_deets = Contract.create(
       contract_duration: params[:contract_duration],
       worth: params[:worth],
       agent_id: params[:agent_id],
@@ -136,9 +130,8 @@ get '/' do
     )
     contract_deets.to_json
   end
-   put '/agent_profiles/:id' do
-    agent_prof_deets = Agent_profile.find(params[:id])
-    agent_prof_deets.update(
+  post '/agent_profiles' do
+    agent_prof_deets = Agent_profile.create(
       age: params[:age],
       years_of_experience: params[:years_of_experience],
       bio: params[:bio],
@@ -201,7 +194,47 @@ get '/' do
     agent_prof_deets.to_json
   end
 
-  
+#PUT
+ put '/players/:id' do
+    player_put_deets = Player.find(params[:id])
+    player_put_deets.update(
+      name: params[:name],
+      age: params[:age],
+      race: params[:race],
+      natonality: params[:nationality],
+      agent_id: params[:agent_id],
+      team_id: params[:team_id]
+    )
+    player_put_deets.to_json
+  end
+
+  put '/agents/:id' do
+    agent_put_deets = Agent.find(params[:id])
+    agent_put_deets.update(
+      name: params[:name],
+      years_of_experience: params[:years_of_experience]
+    )
+    agent_put_deets.to_json
+  end
+
+  put '/teams/:id' do
+    team_put_deets = Team.find(params[:id])
+    team_put_deets.update(
+      name: params[:name],
+      years_of_experience: params[:years_of_experience]
+    )
+    team_put_deets.to_json
+  end
+   put '/agent_profiles/:id' do
+    agent_prof_put_deets = Agent_profile.find(params[:id])
+    agent_prof_put_deets.update(
+      age: params[:age],
+      years_of_experience: params[:years_of_experience],
+      bio: params[:bio],
+      agent_id:params[:agent_id]
+    )
+    agent_prof_put_deets.to_json
+  end
 
   # DELETE
   delete '/players/:id' do

@@ -39,6 +39,7 @@ GEM
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    psych (3.1.0)
     rack (2.2.4)
     rack-contrib (2.3.0)
       rack (~> 2.0)
@@ -86,6 +87,7 @@ GEM
     tilt (2.0.11)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
+    uri (0.10.0)
     zeitwerk (2.6.0)
 
 PLATFORMS
@@ -97,6 +99,7 @@ DEPENDENCIES
   faker
   pg
   pry (~> 0.14.1)
+  psych
   rack-contrib (~> 2.3)
   rack-cors (~> 1.1)
   rack-test (~> 1.1)
@@ -109,6 +112,7 @@ DEPENDENCIES
   sinatra-activerecord (~> 2.0)
   sqlite3 (~> 1.4)
   thin (~> 1.8)
+  uri
 
 BUNDLED WITH
    2.2.23
