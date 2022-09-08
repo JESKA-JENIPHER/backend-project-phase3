@@ -4,36 +4,7 @@ class ApplicationController < Sinatra::Base
   # Add your routes here
 get '/' do
     %{
-    The list of endpoints:
-      
-      GET requests:
-      /players
-      /agents
-      /teams
-      /players/:id
-      /teams/:id
-      /agents/:id
-
-      POST requests:
-      /players
-      /agents
-      /teams
-
-      DELETE requests:
-      /players/:id
-      /agents/:id
-      /teams/:id
-
-      PATCH requests
-      /players/:id
-        players patches only name and age
-      /agents/:id
-        agents patches only name, years of experience, fee
-      /teams/:id
-        teams patches only name, year founded
-
-      PUT requests
-      same endpoints as patch requests but will change all the relevant fields
+     //sporty_sport
       }
   end
 
@@ -60,36 +31,32 @@ get '/' do
 
   get "/players/:id" do
     all_players = Player.find(params[:id])
-    all_players.to_json(only: [:id, :name, :age, :slogan, :role_played, :image_url])
+    all_players.to_json(only: [:id, :name, :age])
   end
 
  get '/agents/:id' do
-    all_agents = Agent.all
-    all_agents.to_json(only: [:id, :name, :years_of_experience, :fee])
+    all_agents = Agent.find(params[:id])
+    all_agents.to_json(only: [:id, :name, :id_number, :public_contact])
   end
   
-  get '/teams/id' do
-    all_teams = Team.all
-    all_teams.to_json(only: [:id, :name, :year_founded])
+  get '/teams/:id' do
+    all_teams = Team.find(params[:id])
+    all_teams.to_json(only: [:id, :name, :year_founded, :agent_id, :status])
   end
-    get '/agent_profiles/id' do
-    all_profiles = Agent_profile.all
+    get '/agent_profiles/:id' do
+    all_profiles = Agent_profile.find(params[:id])
     all_profiles.to_json(only: [:id, :age, :years_of_experience, :bio, :agent_id])
   end
 
-#  get '/players/agents' do
-#     all_players = Player.find(params[:id])
-#     all_players.to_json(only: [:id, :name, :age, :agent_id, :team_id], include: {agents: {only: [:name]}})
-#   end
-  # get '/agents/edit/:id' do
-  #   single_agent = Agent.find(params[:id])
-  #   single_agent.to_json(only: [:id, :name, :years_of_experience,:fee], include: {contract: {only: [:player_id], include: {player: [:name]}}})
-  # end
+  get '/agents/contracts/:id' do
+    single_agent = Agent.find(params[:id])
+    single_agent.to_json(only: [:id, :name, :years_of_experience,:fee], include: {contracts: {only: [:player_id]}})
+  end
 
-  # get '/teams/edit/:id' do
-  #   single_team = Team.find(params[:id])
-  #   single_team.to_json(only: [:id, :name, :total_units, :year_founded], include: {players: {only: [:name]}})
-  # end
+  get '/agents/players/:id' do
+    single_agent = Agent.find(params[:id])
+    single_agent.to_json(only: [:id, :name, :years_of_experience,:fee], include: {players: {only: [:name],include: {contracts: {only: [:contract_duration]}}}} )
+  end
 
 # //POST
 
