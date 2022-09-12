@@ -12,9 +12,9 @@ end
 10.times do
     seeded_agents = Agent.create(
         name: Faker::Name.name,
-        id_number:rand(356472...538421),
-        private_contact:Faker::Base.numerify('+254(###) ### ####'),
-        public_contact: Faker::Base.numerify('+254(###) ### ####'),
+        id_number:rand(356472..538421),
+        private_contact:rand(0722456302..0756449123),
+        public_contact: rand(0722456302..0756449123) ,
         team_id:rand(1..13)
     )
 end
@@ -36,7 +36,7 @@ end
         name: Faker::Sports::Football.team,
         year_founded: rand(1980..2022),
         agent_id:rand(1..10),
-        status: Faker::Boolean.boolean 
+        status: rand(0..1)
     )
 end
 

@@ -150,8 +150,7 @@ get '/' do
       name: params[:name],
       age: params[:age],
       race: params[:race],
-      natonality: params[:nationality],
-      agent_id: params[:agent_id],
+      nationality: params[:nationality],
       team_id: params[:team_id]
     )
     player_deets.to_json
@@ -161,7 +160,8 @@ get '/' do
     agent_deets = Agent.find(params[:id])
     agent_deets.update(
       name: params[:name],
-      years_of_experience: params[:years_of_experience]
+      id_number: params[:id_number],
+      public_contact: params[:public_contact]
     )
     agent_deets.to_json
   end
@@ -170,7 +170,9 @@ get '/' do
     team_deets = Team.find(params[:id])
     team_deets.update(
       name: params[:name],
-      years_of_experience: params[:years_of_experience]
+      year_founded: params[:year_founded],
+      agent_id: params[:agent_id],
+      status:params[:status]
     )
     team_deets.to_json
   end
@@ -203,8 +205,7 @@ get '/' do
       name: params[:name],
       age: params[:age],
       race: params[:race],
-      natonality: params[:nationality],
-      agent_id: params[:agent_id],
+      nationality: params[:nationality],
       team_id: params[:team_id]
     )
     player_put_deets.to_json
@@ -213,8 +214,9 @@ get '/' do
   put '/agents/:id' do
     agent_put_deets = Agent.find(params[:id])
     agent_put_deets.update(
-      name: params[:name],
-      years_of_experience: params[:years_of_experience]
+       name: params[:name],
+      id_number: params[:id_number],
+      public_contact: params[:public_contact]
     )
     agent_put_deets.to_json
   end
@@ -223,7 +225,9 @@ get '/' do
     team_put_deets = Team.find(params[:id])
     team_put_deets.update(
       name: params[:name],
-      years_of_experience: params[:years_of_experience]
+      year_founded: params[:year_founded],
+      agent_id: params[:agent_id],
+      status:params[:status]
     )
     team_put_deets.to_json
   end
